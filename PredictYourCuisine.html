@@ -12198,13 +12198,19 @@ Name: cuisine, Length: 39774, dtype: object
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## TODO: 统计佐料出现次数，并赋值到sum_ingredients字典中</span>
-<span class="n">sum_ingredients</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="c1"># sum_ingredients = {}</span>
+<span class="c1"># for row in train_ingredients:</span>
+<span class="c1">#     for name in row:</span>
+<span class="c1">#         if name in sum_ingredients:</span>
+<span class="c1">#             sum_ingredients[name] += 1</span>
+<span class="c1">#         else:</span>
+<span class="c1">#             sum_ingredients[name] = 1</span>
+            
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+<span class="n">sum_ingredients</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">train_ingredients</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">sum_ingredients</span><span class="p">:</span>
-            <span class="n">sum_ingredients</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">sum_ingredients</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">sum_ingredients</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
 </pre></div>
 
 </div>
@@ -12260,14 +12266,21 @@ Name: cuisine, Length: 39774, dtype: object
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## TODO: 统计意大利菜系中佐料出现次数，并赋值到italian_ingredients字典中</span>
-<span class="n">italian_ingredients</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">indices</span> <span class="o">=</span> <span class="n">train_targets</span><span class="p">[</span><span class="n">train_targets</span> <span class="o">==</span> <span class="s1">&#39;italian&#39;</span><span class="p">]</span>
-<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">train_ingredients</span><span class="p">[</span><span class="n">indices</span><span class="o">.</span><span class="n">index</span><span class="p">]:</span>
-    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">italian_ingredients</span><span class="p">:</span>
+<span class="c1"># italian_ingredients = {}</span>
+<span class="c1"># indices = train_targets[train_targets == &#39;italian&#39;]</span>
+<span class="c1"># for row in train_ingredients[indices.index]:</span>
+<span class="c1">#     for name in row:</span>
+<span class="c1">#         if name in italian_ingredients:</span>
+<span class="c1">#             italian_ingredients[name] += 1</span>
+<span class="c1">#         else:</span>
+<span class="c1">#             italian_ingredients[name] = 1</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+<span class="n">italian_ingredients</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ingredients</span><span class="p">,</span> <span class="n">cuisine</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">train_ingredients</span><span class="p">,</span> <span class="n">train_targets</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">cuisine</span> <span class="o">==</span> <span class="s1">&#39;italian&#39;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">ingredients</span><span class="p">:</span>
             <span class="n">italian_ingredients</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">italian_ingredients</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
             
 </pre></div>
 
@@ -12500,12 +12513,14 @@ egg cherry date dark muscovado sugar ground cinnamon mixed spice cake vanilla ex
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 你需要通过head()函数来预览训练集train_tfidf,train_targets数据</span>
-<span class="c1"># 这里数据有点问题，但我检查不出上面的哪个步骤有问题</span>
-<span class="n">train_tfidf</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+
+<span class="c1">#np.set_printoptions(threshold=np.inf)</span>
+<span class="c1">#print(train_tfidf[:5])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">train_targets</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>
 </pre></div>
 
 </div>
@@ -12518,19 +12533,13 @@ egg cherry date dark muscovado sugar ground cinnamon mixed spice cake vanilla ex
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[14]:</div>
+<div class="prompt"></div>
 
 
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>matrix([[0., 0., 0., ..., 0., 0., 0.],
-        [0., 0., 0., ..., 0., 0., 0.],
-        [0., 0., 0., ..., 0., 0., 0.],
-        [0., 0., 0., ..., 0., 0., 0.],
-        [0., 0., 0., ..., 0., 0., 0.]])</pre>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;greek&#39;, &#39;southern_us&#39;, &#39;filipino&#39;, &#39;indian&#39;, &#39;indian&#39;]
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -12563,7 +12572,7 @@ egg cherry date dark muscovado sugar ground cinnamon mixed spice cake vanilla ex
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### TODO：划分出验证集</span>
@@ -12604,7 +12613,7 @@ egg cherry date dark muscovado sugar ground cinnamon mixed spice cake vanilla ex
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span>
@@ -12638,7 +12647,7 @@ egg cherry date dark muscovado sugar ground cinnamon mixed spice cake vanilla ex
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## 请不要修改下方代码</span>
@@ -12651,6 +12660,24 @@ egg cherry date dark muscovado sugar ground cinnamon mixed spice cake vanilla ex
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>验证集上的得分为：0.7898177247014456
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -12677,11 +12704,11 @@ egg cherry date dark muscovado sugar ground cinnamon mixed spice cake vanilla ex
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### TODO：预测测试结果</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_tfidf</span><span class="p">)</span>
 
 <span class="c1">## 请不要修改下方代码</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;预测的测试集个数为：</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">predictions</span><span class="p">)))</span>
@@ -12690,6 +12717,122 @@ egg cherry date dark muscovado sugar ground cinnamon mixed spice cake vanilla ex
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>预测的测试集个数为：9944
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[18]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>ingredients</th>
+      <th>cuisine</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>18009</td>
+      <td>[baking powder, eggs, all-purpose flour, raisins, milk, white sugar]</td>
+      <td>british</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>28583</td>
+      <td>[sugar, egg yolks, corn starch, cream of tartar, bananas, vanilla wafers, milk, vanilla extract, toasted pecans, egg...</td>
+      <td>southern_us</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>41580</td>
+      <td>[sausage links, fennel bulb, fronds, olive oil, cuban peppers, onions]</td>
+      <td>italian</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>29752</td>
+      <td>[meat cuts, file powder, smoked sausage, okra, shrimp, andouille sausage, water, paprika, hot sauce, garlic cloves, ...</td>
+      <td>cajun_creole</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>35687</td>
+      <td>[ground black pepper, salt, sausage casings, leeks, parmigiano reggiano cheese, cornmeal, water, extra-virgin olive ...</td>
+      <td>italian</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>38527</td>
+      <td>[baking powder, all-purpose flour, peach slices, corn starch, heavy cream, lemon juice, unsalted butter, salt, white...</td>
+      <td>southern_us</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>19666</td>
+      <td>[grape juice, orange, white zinfandel]</td>
+      <td>french</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>41217</td>
+      <td>[ground ginger, white pepper, green onions, orange juice, sugar, Sriracha, vegetable oil, orange zest, chicken broth...</td>
+      <td>chinese</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>28753</td>
+      <td>[diced onions, taco seasoning mix, all-purpose flour, chopped cilantro fresh, ground cumin, ground cinnamon, vegetab...</td>
+      <td>mexican</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>22659</td>
+      <td>[eggs, cherries, dates, dark muscovado sugar, ground cinnamon, mixed spice, cake, vanilla extract, self raising flou...</td>
+      <td>british</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -12706,7 +12849,7 @@ egg cherry date dark muscovado sugar ground cinnamon mixed spice cake vanilla ex
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## 加载结果格式</span>
